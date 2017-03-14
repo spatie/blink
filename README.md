@@ -1,4 +1,4 @@
-# Very short description of the package
+# Cache that expires in the blink of an eye
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 [![Build Status](https://img.shields.io/travis/spatie/blink/master.svg?style=flat-square)](https://travis-ci.org/spatie/blink)
