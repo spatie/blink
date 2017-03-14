@@ -6,7 +6,52 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/blink.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/blink)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+This package contains a class called `Blink` that can cache values. The cache only spans the lenght of a single request.
+
+It can be used like this:
+
+```php
+$blink = new Blink();
+
+$valuestore->put('key', 'value');
+
+$valuestore->get('key'); // Returns 'value'
+
+$valuestore->has('key'); // Returns true
+
+// Specify a default value for when the specified key does not exist
+$valuestore->get('non existing key', 'default') // Returns 'default'
+
+$valuestore->put('anotherKey', 'anotherValue');
+
+// Put multiple items in one go
+$valuestore->put(['ringo' => 'drums', 'paul' => 'bass']);
+
+$valuestore->all(); // Returns an array with all items
+
+$valuestore->forget('key'); // Removes the item
+
+$valuestore->flush(); // Empty the entire valuestore
+
+$valuestore->flushStartingWith('somekey'); // remove all items who's keys start with "somekey"
+
+$valuestore->increment('number'); // $valuestore->get('key') will return 1 
+$valuestore->increment('number'); // $valuestore->get('key') will return 2
+$valuestore->increment('number', 3); // $valuestore->get('key') will return 5
+
+// Valuestore implements ArrayAccess
+$valuestore['key'] = 'value';
+$valuestore['key']; // Returns 'value'
+isset($valuestore['key']); // Return true
+unset($valuestore['key']); // Equivalent to removing the value
+
+// Valuestore impements Countable
+count($valuestore); // Returns 0
+$valuestore->put('key', 'value');
+count($valuestore); // Returns 1
+```
+
+Read the [usage](#usage) section of this readme to learn the other methods.
 
 ## Postcardware
 
@@ -18,13 +63,6 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 
 ## Installation
 
-**Note:** Remove this paragraph if you are building a public package  
-This package is custom built for [Spatie](https://spatie.be) projects and is therefore not registered on packagist. In order to install it via composer you must specify this extra repository in `composer.json`:
-
-```json
-"repositories": [ { "type": "composer", "url": "https://satis.spatie.be/" } ]
-```
-
 You can install the package via composer:
 
 ``` bash
@@ -33,9 +71,139 @@ composer require spatie/blink
 
 ## Usage
 
-``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+A `Blink` instance can just be newed up.
+
+```php
+$blink = new \Spatie\Blink\Blink()
+```
+
+You can call the following methods on it
+
+### put
+```php
+/**
+ * Put a value in the blink cache.
+ *
+ * @param string|array $name
+ * @param string|int|null $value
+ * 
+ * @return $this
+ */
+public function put($name, $value = null)
+```
+
+### get
+
+```php
+/**
+ * Get a value from the blink cache.
+ *
+ * @param string $name
+ *
+ * @return null|string
+ */
+public function get(string $name)
+```
+
+### has
+
+```php
+/*
+ * Determine if the blink cache has a value for the given name.
+ */
+public function has(string $name) : bool
+```
+
+### all
+```php
+/*
+ * Get all values in the blink cache.
+*/
+public function all() : array
+```
+
+### allStartingWith
+```php
+/**
+ * Get all values in the blink cache which keys start with the given string.
+ *
+ * @param string $startingWith
+ *
+ * @return array
+*/
+public function allStartingWith(string $startingWith = '') : array
+```
+
+### forget
+```php
+/**
+ * Forget a value from the blink cache.
+ *
+ * @param string $key
+ *
+ * @return $this
+ */
+public function forget(string $key)
+```
+
+### flush
+```php
+/**
+ * Flush all values from the blink cache.
+ *
+ * @return $this
+ */
+ public function flush()
+```
+
+### flushStartingWith
+```php
+/**
+ * Flush all values in the blink cache which keys start with the specified value.
+ *
+ * @param string $startingWith
+ *
+ * @return $this
+ */
+ public function flushStartingWith(string $startingWith)
+```
+
+### pull
+```php
+/**
+ * Get and forget a value from the blink cache.
+ *
+ * @param string $name 
+ *
+ * @return null|string
+ */
+public function pull(string $name)
+```
+
+### increment
+```php
+/**
+ * Increment a value from the blink cache.
+ *
+ * @param string $name
+ * @param int $by
+ *
+ * @return int|null|string
+ */
+ public function increment(string $name, int $by = 1)
+```
+
+### decrement
+```php
+/**
+ * Decrement a value from the blink cache.
+ *
+ * @param string $name
+ * @param int $by
+ *
+ * @return int|null|string
+ */
+ public function decrement(string $name, int $by = 1)
 ```
 
 ## Changelog
