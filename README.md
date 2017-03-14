@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 [![Build Status](https://img.shields.io/travis/spatie/blink/master.svg?style=flat-square)](https://travis-ci.org/spatie/blink)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/xxxxxxxxx.svg?style=flat-square)](https://insight.sensiolabs.com/projects/xxxxxxxxx)
+[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/2ce5c803-2126-4c73-8009-d65ff9d87d71.svg?style=flat-square)](https://insight.sensiolabs.com/projects/2ce5c803-2126-4c73-8009-d65ff9d87d71)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/blink.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/blink)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 
