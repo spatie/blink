@@ -3,7 +3,9 @@
     "description": "Cache that expires in the blink of an eye",
     "keywords": [
         "spatie",
-        "blink"
+        "blink",
+        "cache",
+        "caching"
     ],
     "homepage": "https://github.com/spatie/blink",
     "license": "MIT",
@@ -16,19 +18,19 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Spatie\\Blink\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Test\\": "tests"
+            "Spatie\\Blink\\Test\\": "tests"
         }
     },
     "scripts": {
