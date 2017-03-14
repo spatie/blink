@@ -13,42 +13,42 @@ It can be used like this:
 ```php
 $blink = new Blink();
 
-$valuestore->put('key', 'value');
+$blink->put('key', 'value');
 
-$valuestore->get('key'); // Returns 'value'
+$blink->get('key'); // Returns 'value'
 
-$valuestore->has('key'); // Returns true
+$blink->has('key'); // Returns true
 
 // Specify a default value for when the specified key does not exist
-$valuestore->get('non existing key', 'default') // Returns 'default'
+$blink->get('non existing key', 'default') // Returns 'default'
 
-$valuestore->put('anotherKey', 'anotherValue');
+$blink->put('anotherKey', 'anotherValue');
 
 // Put multiple items in one go
-$valuestore->put(['ringo' => 'drums', 'paul' => 'bass']);
+$blink->put(['ringo' => 'drums', 'paul' => 'bass']);
 
-$valuestore->all(); // Returns an array with all items
+$blink->all(); // Returns an array with all items
 
-$valuestore->forget('key'); // Removes the item
+$blink->forget('key'); // Removes the item
 
-$valuestore->flush(); // Empty the entire valuestore
+$blink->flush(); // Empty the entire blink
 
-$valuestore->flushStartingWith('somekey'); // remove all items who's keys start with "somekey"
+$blink->flushStartingWith('somekey'); // remove all items who's keys start with "somekey"
 
-$valuestore->increment('number'); // $valuestore->get('key') will return 1 
-$valuestore->increment('number'); // $valuestore->get('key') will return 2
-$valuestore->increment('number', 3); // $valuestore->get('key') will return 5
+$blink->increment('number'); // $blink->get('key') will return 1 
+$blink->increment('number'); // $blink->get('key') will return 2
+$blink->increment('number', 3); // $blink->get('key') will return 5
 
 // Valuestore implements ArrayAccess
-$valuestore['key'] = 'value';
-$valuestore['key']; // Returns 'value'
-isset($valuestore['key']); // Return true
-unset($valuestore['key']); // Equivalent to removing the value
+$blink['key'] = 'value';
+$blink['key']; // Returns 'value'
+isset($blink['key']); // Return true
+unset($blink['key']); // Equivalent to removing the value
 
 // Valuestore impements Countable
-count($valuestore); // Returns 0
-$valuestore->put('key', 'value');
-count($valuestore); // Returns 1
+count($blink); // Returns 0
+$blink->put('key', 'value');
+count($blink); // Returns 1
 ```
 
 Read the [usage](#usage) section of this readme to learn the other methods.
