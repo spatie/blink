@@ -2,10 +2,10 @@
 
 namespace Spatie\Blink\Test;
 
-use PHPUnit\Framework\TestCase;
 use Spatie\Blink\Blink;
+use PHPUnit\Framework\TestCase;
 
-class BlinkTestTest extends TestCase
+class BlinkTest extends TestCase
 {
     /** @var string */
     protected $storageFile;
@@ -37,8 +37,6 @@ class BlinkTestTest extends TestCase
 
         $this->assertSame($testArray, $this->blink->get('key'));
     }
-
-
 
     /** @test */
     public function it_can_determine_if_the_blink_cache_holds_a_value_for_a_given_name()
