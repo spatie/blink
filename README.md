@@ -6,7 +6,7 @@
 [![StyleCI](https://styleci.io/repos/84998612/shield?branch=master)](https://styleci.io/repos/84998612)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 
-This package contains a class called `Blink` that can cache values. The cache only spans the lenght of a single request.
+This package contains a class called `Blink` that can cache values. The cache only spans the length of a single request.
 
 It can be used like this:
 
