@@ -33,7 +33,7 @@ $blink->forget('key'); // Removes the item
 
 $blink->flush(); // Empty the entire blink
 
-$blink->flushStartingWith('somekey'); // remove all items who's keys start with "somekey"
+$blink->flushStartingWith('somekey'); // Remove all items whose keys start with "somekey"
 
 $blink->increment('number'); // $blink->get('key') will return 1 
 $blink->increment('number'); // $blink->get('key') will return 2
