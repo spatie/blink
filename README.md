@@ -16,8 +16,10 @@ $blink = new Blink();
 $blink->put('key', 'value');
 
 $blink->get('key'); // Returns 'value'
+$blink->get('prefix*'); // Returns an array of values whose keys start with 'prefix'
 
 $blink->has('key'); // Returns true
+$blink->has('prefix*'); // Returns true if the blink contains contains a key that starts with 'prefix'
 
 // Specify a default value for when the specified key does not exist
 $blink->get('non existing key', 'default') // Returns 'default'
@@ -30,6 +32,7 @@ $blink->put(['ringo' => 'drums', 'paul' => 'bass']);
 $blink->all(); // Returns an array with all items
 
 $blink->forget('key'); // Removes the item
+$blink->forget('prefix*'); // Forget all items of which the key starts with 'prefix'
 
 $blink->flush(); // Empty the entire blink
 
@@ -98,6 +101,8 @@ public function put($name, $value = null)
 /**
  * Get a value from the blink cache.
  *
+ * This function has support for the '*' wildcard.
+ *
  * @param string $name
  *
  * @return null|string
@@ -110,6 +115,8 @@ public function get(string $name)
 ```php
 /*
  * Determine if the blink cache has a value for the given name.
+ *
+ * This function has support for the '*' wildcard.
  */
 public function has(string $name) : bool
 ```
@@ -122,22 +129,12 @@ public function has(string $name) : bool
 public function all() : array
 ```
 
-### allStartingWith
-```php
-/**
- * Get all values in the blink cache which keys start with the given string.
- *
- * @param string $startingWith
- *
- * @return array
-*/
-public function allStartingWith(string $startingWith = '') : array
-```
-
 ### forget
 ```php
 /**
  * Forget a value from the blink cache.
+ *
+ * This function has support for the '*' wildcard.
  *
  * @param string $key
  *
@@ -156,22 +153,12 @@ public function forget(string $key)
  public function flush()
 ```
 
-### flushStartingWith
-```php
-/**
- * Flush all values in the blink cache which keys start with the specified value.
- *
- * @param string $startingWith
- *
- * @return $this
- */
- public function flushStartingWith(string $startingWith)
-```
-
 ### pull
 ```php
 /**
  * Get and forget a value from the blink cache.
+ *
+ * This function has support for the '*' wildcard.
  *
  * @param string $name 
  *

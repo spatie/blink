@@ -13,17 +13,17 @@ class Blink implements ArrayAccess, Countable
     /**
      * Put a value in the store.
      *
-     * @param string|array $name
+     * @param string|array $key
      * @param mixed $value
      *
      * @return $this
      */
-    public function put($name, $value = null)
+    public function put($key, $value = null)
     {
-        $newValues = $name;
+        $newValues = $key;
 
-        if (! is_array($name)) {
-            $newValues = [$name => $value];
+        if (!is_array($key)) {
+            $newValues = [$key => $value];
         }
 
         $this->values = array_merge($this->values, $newValues);
@@ -34,24 +34,38 @@ class Blink implements ArrayAccess, Countable
     /**
      * Get a value from the store.
      *
-     * @param string $name
+     * This function has support for the '*' wildcard.
+     *
+     * @param string $key
      * @param mixed $default
      *
-     * @return null|string
+     * @return null|string|array
      */
-    public function get(string $name, $default = null)
+    public function get(string $key, $default = null)
     {
-        return $this->has($name)
-            ? $this->values[$name]
+        if ($this->stringContainsWildcard($key)) {
+            $values = $this->getValuesForKeys($this->getKeysMatching($key));
+
+            return count($values) ? $values : $default;
+        }
+
+        return $this->has($key)
+            ? $this->values[$key]
             : $default;
     }
 
     /*
      * Determine if the store has a value for the given name.
+     *
+     * This function has support for the '*' wildcard.
      */
-    public function has(string $name): bool
+    public function has(string $key): bool
     {
-        return array_key_exists($name, $this->values);
+        if ($this->stringContainsWildcard($key)) {
+            return count($this->getKeysMatching($key)) > 0;
+        }
+
+        return array_key_exists($key, $this->values);
     }
 
     /**
@@ -65,23 +79,9 @@ class Blink implements ArrayAccess, Countable
     }
 
     /**
-     * Get all keys starting with a given string from the store.
-     *
-     * @param string $startingWith
-     *
-     * @return array
-     */
-    public function allStartingWith(string $startingWith = ''): array
-    {
-        if ($startingWith === '') {
-            return $this->values;
-        }
-
-        return $this->filterKeysStartingWith($this->values, $startingWith);
-    }
-
-    /**
      * Forget a value from the store.
+     *
+     * This function has support for the '*' wildcard.
      *
      * @param string $key
      *
@@ -89,7 +89,13 @@ class Blink implements ArrayAccess, Countable
      */
     public function forget(string $key)
     {
-        unset($this->values[$key]);
+        $keys = $this->stringContainsWildcard('*')
+            ? $this->getKeysMatching($key)
+            : [$key];
+
+        foreach ($keys as $key) {
+            unset($this->values[$key]);
+        }
 
         return $this;
     }
@@ -105,33 +111,32 @@ class Blink implements ArrayAccess, Countable
     }
 
     /**
-     * Flush all values which keys start with a given string.
-     *
-     * @param string $startingWith
-     *
-     * @return $this
-     */
-    public function flushStartingWith(string $startingWith = '')
-    {
-        if ($startingWith !== '') {
-            $this->values = $this->filterKeysNotStartingWith($this->values, $startingWith);
-        }
-
-        return $this;
-    }
-
-    /**
      * Get and forget a value from the store.
      *
-     * @param string $name
+     * This function has support for the '*' wildcard.
+     *
+     * @param string $key
      *
      * @return null|string
      */
-    public function pull(string $name)
+    public function pull(string $key)
     {
-        $value = $this->get($name);
+        if ($this->stringContainsWildcard($key)) {
+            $keys = $this->getKeysMatching($key);
 
-        $this->forget($name);
+            $values = $this->getValuesForKeys($keys);
+
+            foreach($keys as $key) {
+                $this->forget($key);
+            }
+
+            return $values;
+        }
+
+
+        $value = $this->get($key);
+
+        $this->forget($key);
 
         return $value;
     }
@@ -139,18 +144,18 @@ class Blink implements ArrayAccess, Countable
     /**
      * Increment a value from the store.
      *
-     * @param string $name
+     * @param string $key
      * @param int $by
      *
      * @return int|null|string
      */
-    public function increment(string $name, int $by = 1)
+    public function increment(string $key, int $by = 1)
     {
-        $currentValue = $this->get($name) ?? 0;
+        $currentValue = $this->get($key) ?? 0;
 
         $newValue = $currentValue + $by;
 
-        $this->put($name, $newValue);
+        $this->put($key, $newValue);
 
         return $newValue;
     }
@@ -158,14 +163,14 @@ class Blink implements ArrayAccess, Countable
     /**
      * Decrement a value from the store.
      *
-     * @param string $name
+     * @param string $key
      * @param int $by
      *
      * @return int|null|string
      */
-    public function decrement(string $name, int $by = 1)
+    public function decrement(string $key, int $by = 1)
     {
-        return $this->increment($name, $by * -1);
+        return $this->increment($key, $by * -1);
     }
 
     /**
@@ -243,7 +248,7 @@ class Blink implements ArrayAccess, Countable
     protected function filterKeysNotStartingWith(array $values, string $startsWith): array
     {
         return array_filter($values, function ($key) use ($startsWith) {
-            return ! $this->startsWith($key, $startsWith);
+            return !$this->startsWith($key, $startsWith);
         }, ARRAY_FILTER_USE_KEY);
     }
 
@@ -251,4 +256,37 @@ class Blink implements ArrayAccess, Countable
     {
         return substr($haystack, 0, strlen($needle)) === $needle;
     }
+
+    protected function getKeysMatching(string $pattern): array
+    {
+        $keys = array_keys($this->values);
+
+        return array_filter($keys, function ($key) use ($pattern) {
+            return fnmatch($pattern, $key);
+        });
+    }
+
+    protected function stringContainsWildcard($string): bool
+    {
+        return $this->stringContains($string, '*');
+    }
+
+    protected function stringContains($haystack, $needles)
+    {
+        foreach ((array)$needles as $needle) {
+            if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function getValuesForKeys(array $keys)
+    {
+        return array_filter($this->values, function ($key) use ($keys) {
+            return in_array($key, $keys);
+        }, ARRAY_FILTER_USE_KEY);
+    }
+
 }

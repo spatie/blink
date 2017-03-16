@@ -49,9 +49,50 @@ class BlinkTest extends TestCase
     }
 
     /** @test */
+    public function it_can_determine_if_the_blink_cache_holds_a_value_for_a_given_name_with_a_wild_card()
+    {
+        $this->assertFalse($this->blink->has('prefix.*.suffix'));
+
+        $this->blink->put('prefix.middle.suffix', 'value');
+
+        $this->assertTrue($this->blink->has('prefix.*.suffix'));
+        $this->assertTrue($this->blink->has('*.suffix'));
+        $this->assertTrue($this->blink->has('prefix.*'));
+        $this->assertTrue($this->blink->has('*'));
+        $this->assertFalse($this->blink->has('*.no'));
+        $this->assertFalse($this->blink->has('no.*'));
+    }
+
+
+    /** @test */
     public function it_will_return_the_default_value_when_using_a_non_existing_key()
     {
         $this->assertSame('default', $this->blink->get('key', 'default'));
+    }
+
+    /** @test */
+    public function it_will_return_an_array_when_getting_values_using_a_wildcard()
+    {
+        $this->blink->put('prefix.1.suffix', 'value1');
+        $this->blink->put('prefix.2.suffix', 'value2');
+        $this->blink->put('prefix.1', 'value3');
+        $this->blink->put('1.suffix', 'value4');
+
+        $this->assertSame([
+            'prefix.1.suffix' => 'value1',
+            'prefix.2.suffix' => 'value2',
+        ], $this->blink->get('prefix.*.suffix'));
+    }
+
+    /** @test */
+    public function it_will_return_the_default_value_when_getting_values_using_a_wildcard_that_has_no_matches()
+    {
+        $this->blink->put('prefix.1.suffix', 'value1');
+        $this->blink->put('prefix.2.suffix', 'value2');
+        $this->blink->put('prefix.1', 'value3');
+        $this->blink->put('1.suffix', 'value4');
+
+        $this->assertSame('default', $this->blink->get('non.*.existant', 'default'));
     }
 
     /** @test */
@@ -138,25 +179,6 @@ class BlinkTest extends TestCase
     }
 
     /** @test */
-    public function it_can_fetch_all_values_starting_with_a_certain_value()
-    {
-        $this->blink->put([
-            'group1Key1' => 'valueGroup1Key1',
-            'group1Key2' => 'valueGroup1Key2',
-            'testgroup1' => 'valueTestGroup1',
-            'group2Key1' => 'valueGroup2Key1',
-            'group2Key2' => 'valueGroup2Key2',
-        ]);
-
-        $expectedArray = [
-            'group1Key1' => 'valueGroup1Key1',
-            'group1Key2' => 'valueGroup1Key2',
-        ];
-
-        $this->assertSame($expectedArray, $this->blink->allStartingWith('group1'));
-    }
-
-    /** @test */
     public function it_can_forget_a_value()
     {
         $this->blink->put('key', 'value');
@@ -170,6 +192,22 @@ class BlinkTest extends TestCase
         $this->assertNull($this->blink->get('otherKey'));
 
         $this->assertSame('otherValue2', $this->blink->get('otherKey2'));
+    }
+
+    /** @test */
+    public function it_can_forget_multiple_values_at_once_using_a_wildcard()
+    {
+        $this->blink->put('prefix.1.suffix', 'value1');
+        $this->blink->put('prefix.2.suffix', 'value2');
+        $this->blink->put('prefix.1', 'value3');
+        $this->blink->put('1.suffix', 'value4');
+
+        $this->blink->forget('prefix.*.suffix');
+
+        $this->assertSame([
+            'prefix.1' => 'value3',
+            '1.suffix' => 'value4',
+        ], $this->blink->all('key'));
     }
 
     /** @test */
@@ -187,27 +225,6 @@ class BlinkTest extends TestCase
     }
 
     /** @test */
-    public function it_can_flush_all_keys_starting_with_a_certain_string()
-    {
-        $this->blink->put([
-            'group1' => 'valueGroup1',
-            'group1Key1' => 'valueGroup1Key1',
-            'group1Key2' => 'valueGroup1Key2',
-            'group2Key1' => 'valueGroup2Key1',
-            'group2Key2' => 'valueGroup2Key2',
-        ]);
-
-        $this->blink->flushStartingWith('group1');
-
-        $expectedArray = [
-            'group2Key1' => 'valueGroup2Key1',
-            'group2Key2' => 'valueGroup2Key2',
-        ];
-
-        $this->assertSame($expectedArray, $this->blink->all());
-    }
-
-    /** @test */
     public function it_will_return_an_empty_array_when_getting_all_content()
     {
         $this->assertSame([], $this->blink->all());
@@ -221,6 +238,25 @@ class BlinkTest extends TestCase
         $this->assertSame('value', $this->blink->pull('key'));
 
         $this->assertNull($this->blink->get('key'));
+    }
+
+    /** @test */
+    public function it_can_get_and_forget_a_values_using_a_wildcard()
+    {
+        $this->blink->put('prefix.1.suffix', 'value1');
+        $this->blink->put('prefix.2.suffix', 'value2');
+        $this->blink->put('prefix.1', 'value3');
+        $this->blink->put('1.suffix', 'value4');
+
+        $this->assertSame([
+            'prefix.1.suffix' => 'value1',
+            'prefix.2.suffix' => 'value2'
+        ], $this->blink->pull('prefix.*.suffix'));
+
+        $this->assertSame([
+            'prefix.1' => 'value3',
+            '1.suffix' => 'value4',
+        ], $this->blink->all());
     }
 
     /** @test */
