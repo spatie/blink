@@ -13,8 +13,8 @@ class Blink implements ArrayAccess, Countable
     /**
      * Put a value in the store.
      *
-     * @param string|array    $name
-     * @param string|int|null $value
+     * @param string|array $name
+     * @param mixed $value
      *
      * @return $this
      */
@@ -35,7 +35,7 @@ class Blink implements ArrayAccess, Countable
      * Get a value from the store.
      *
      * @param string $name
-     * @param $default
+     * @param mixed $default
      *
      * @return null|string
      */
@@ -49,7 +49,7 @@ class Blink implements ArrayAccess, Countable
     /*
      * Determine if the store has a value for the given name.
      */
-    public function has(string $name) : bool
+    public function has(string $name): bool
     {
         return array_key_exists($name, $this->values);
     }
@@ -59,7 +59,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @return array
      */
-    public function all() : array
+    public function all(): array
     {
         return $this->values;
     }
@@ -71,7 +71,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @return array
      */
-    public function allStartingWith(string $startingWith = '') : array
+    public function allStartingWith(string $startingWith = ''): array
     {
         if ($startingWith === '') {
             return $this->values;
@@ -140,7 +140,7 @@ class Blink implements ArrayAccess, Countable
      * Increment a value from the store.
      *
      * @param string $name
-     * @param int    $by
+     * @param int $by
      *
      * @return int|null|string
      */
@@ -159,7 +159,7 @@ class Blink implements ArrayAccess, Countable
      * Decrement a value from the store.
      *
      * @param string $name
-     * @param int    $by
+     * @param int $by
      *
      * @return int|null|string
      */
@@ -233,21 +233,21 @@ class Blink implements ArrayAccess, Countable
         return count($this->all());
     }
 
-    protected function filterKeysStartingWith(array $values, string $startsWith) : array
+    protected function filterKeysStartingWith(array $values, string $startsWith): array
     {
         return array_filter($values, function ($key) use ($startsWith) {
             return $this->startsWith($key, $startsWith);
         }, ARRAY_FILTER_USE_KEY);
     }
 
-    protected function filterKeysNotStartingWith(array $values, string $startsWith) : array
+    protected function filterKeysNotStartingWith(array $values, string $startsWith): array
     {
         return array_filter($values, function ($key) use ($startsWith) {
             return ! $this->startsWith($key, $startsWith);
         }, ARRAY_FILTER_USE_KEY);
     }
 
-    protected function startsWith(string $haystack, string $needle) : bool
+    protected function startsWith(string $haystack, string $needle): bool
     {
         return substr($haystack, 0, strlen($needle)) === $needle;
     }
