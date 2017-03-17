@@ -238,8 +238,11 @@ class Blink implements ArrayAccess, Countable
     }
 
     /**
-     * @param $key
+     * Only if the given key is not present in the blink cache the callable will be executed.
      *
+     * The result of the callable will be stored in the given key and returned.
+     *
+     * @param $key
      * @param callable $callable
      *
      * @return mixed
