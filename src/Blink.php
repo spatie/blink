@@ -22,7 +22,7 @@ class Blink implements ArrayAccess, Countable
     {
         $newValues = $key;
 
-        if (!is_array($key)) {
+        if (! is_array($key)) {
             $newValues = [$key => $value];
         }
 
@@ -249,7 +249,7 @@ class Blink implements ArrayAccess, Countable
      */
     public function once($key, callable $callable)
     {
-        if (!$this->has($key)) {
+        if (! $this->has($key)) {
             $this->put($key, $callable());
         }
 
@@ -266,7 +266,7 @@ class Blink implements ArrayAccess, Countable
     protected function filterKeysNotStartingWith(array $values, string $startsWith): array
     {
         return array_filter($values, function ($key) use ($startsWith) {
-            return !$this->startsWith($key, $startsWith);
+            return ! $this->startsWith($key, $startsWith);
         }, ARRAY_FILTER_USE_KEY);
     }
 
@@ -297,7 +297,7 @@ class Blink implements ArrayAccess, Countable
      */
     protected function stringContains(string $haystack, $needles): bool
     {
-        foreach ((array)$needles as $needle) {
+        foreach ((array) $needles as $needle) {
             if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
                 return true;
             }
