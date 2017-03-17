@@ -42,13 +42,13 @@ $blink->increment('number'); // $blink->get('key') will return 1
 $blink->increment('number'); // $blink->get('key') will return 2
 $blink->increment('number', 3); // $blink->get('key') will return 5
 
-// Valuestore implements ArrayAccess
+// Blink implements ArrayAccess
 $blink['key'] = 'value';
 $blink['key']; // Returns 'value'
 isset($blink['key']); // Return true
 unset($blink['key']); // Equivalent to removing the value
 
-// Valuestore implements Countable
+// Blink implements Countable
 count($blink); // Returns 0
 $blink->put('key', 'value');
 count($blink); // Returns 1
