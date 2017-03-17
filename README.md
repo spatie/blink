@@ -18,6 +18,16 @@ $blink->put('key', 'value');
 $blink->get('key'); // Returns 'value'
 $blink->get('prefix*'); // Returns an array of values whose keys start with 'prefix'
 
+// once will only execute the given callable if the given key didn't exist yet
+$blink->once('random', function() {
+    return rand();
+}); // returns random number
+
+$blink->once('random', function() {
+    return rand();
+}); // returns the same number
+
+
 $blink->has('key'); // Returns true
 $blink->has('prefix*'); // Returns true if the blink contains contains a key that starts with 'prefix'
 
