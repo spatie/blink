@@ -365,7 +365,7 @@ class BlinkTest extends TestCase
     /** @test */
     public function it_can_perform_a_function_only_once()
     {
-        $callable = function() {
+        $callable = function () {
             return rand();
         };
 
@@ -373,7 +373,7 @@ class BlinkTest extends TestCase
 
         $this->assertNotNull($firstResult);
 
-        foreach(range(1,10) as $index) {
+        foreach (range(1, 10) as $index) {
             $this->assertSame($firstResult, $this->blink->once('random', $callable));
         }
     }
