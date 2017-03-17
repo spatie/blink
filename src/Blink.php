@@ -265,12 +265,18 @@ class Blink implements ArrayAccess, Countable
         });
     }
 
-    protected function stringContainsWildcard($string): bool
+    protected function stringContainsWildcard(string $string): bool
     {
         return $this->stringContains($string, '*');
     }
 
-    protected function stringContains($haystack, $needles)
+    /**
+     * @param string $haystack
+     * @param string|array $needles
+     *
+     * @return bool
+     */
+    protected function stringContains(string $haystack,$needles): bool
     {
         foreach ((array) $needles as $needle) {
             if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
@@ -281,7 +287,7 @@ class Blink implements ArrayAccess, Countable
         return false;
     }
 
-    public function getValuesForKeys(array $keys)
+    public function getValuesForKeys(array $keys): array
     {
         return array_filter($this->values, function ($key) use ($keys) {
             return in_array($key, $keys);
