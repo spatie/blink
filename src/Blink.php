@@ -276,7 +276,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @return bool
      */
-    protected function stringContains(string $haystack,$needles): bool
+    protected function stringContains(string $haystack, $needles): bool
     {
         foreach ((array) $needles as $needle) {
             if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
