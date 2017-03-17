@@ -48,7 +48,7 @@ $blink['key']; // Returns 'value'
 isset($blink['key']); // Return true
 unset($blink['key']); // Equivalent to removing the value
 
-// Valuestore impements Countable
+// Valuestore implements Countable
 count($blink); // Returns 0
 $blink->put('key', 'value');
 count($blink); // Returns 1
@@ -80,7 +80,7 @@ A `Blink` instance can just be newed up.
 $blink = new \Spatie\Blink\Blink()
 ```
 
-You can call the following methods on it
+You can call the following methods on it:
 
 ### put
 ```php
