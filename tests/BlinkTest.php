@@ -63,7 +63,6 @@ class BlinkTest extends TestCase
         $this->assertFalse($this->blink->has('no.*'));
     }
 
-
     /** @test */
     public function it_will_return_the_default_value_when_using_a_non_existing_key()
     {
@@ -250,7 +249,7 @@ class BlinkTest extends TestCase
 
         $this->assertSame([
             'prefix.1.suffix' => 'value1',
-            'prefix.2.suffix' => 'value2'
+            'prefix.2.suffix' => 'value2',
         ], $this->blink->pull('prefix.*.suffix'));
 
         $this->assertSame([
