@@ -89,7 +89,7 @@ class Blink implements ArrayAccess, Countable
      */
     public function forget(string $key)
     {
-        $keys = $this->stringContainsWildcard('*')
+        $keys = $this->stringContainsWildcard($key)
             ? $this->getKeysMatching($key)
             : [$key];
 
