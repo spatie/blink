@@ -23,7 +23,7 @@ $expensiveFunction = function() {
    return rand();
 });
 $blink->once('random', $expensiveFunction); // returns random number
-$blink->once('random' $expensiveFunction); // returns the same number
+$blink->once('random', $expensiveFunction); // returns the same number
 
 $blink->has('key'); // Returns true
 $blink->has('prefix*'); // Returns true if the blink contains contains a key that starts with 'prefix'
