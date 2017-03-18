@@ -238,7 +238,7 @@ If you discover any security related issues, please email freek@spatie.be instea
 - [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
 
-We got the idea and the name of this package from [Statamic's Blink helper](https://docs.statamic.com/addons/helpers#blink-cache). We reached out to them and got permission for using the `blink` name.
+We got the idea and the name for this package from [Statamic's Blink helper](https://docs.statamic.com/addons/helpers#blink-cache). We reached out to them and got permission for using the `blink` name.
 
 ## About Spatie
 
