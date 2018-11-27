@@ -280,7 +280,7 @@ class Blink implements ArrayAccess, Countable
         $keys = array_keys($this->values);
 
         return array_filter($keys, function ($key) use ($pattern) {
-            return fnmatch($pattern, $key);
+            return fnmatch($pattern, $key, FNM_NOESCAPE);
         });
     }
 

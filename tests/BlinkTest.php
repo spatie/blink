@@ -103,6 +103,25 @@ class BlinkTest extends TestCase
     }
 
     /** @test */
+    public function it_can_use_backslashes_in_keys()
+    {
+        $this->blink->put('\App\Models\Post.1', 'hello-world');
+
+        $this->assertTrue($this->blink->has('\App\Models\Post.1'));
+
+        $this->assertSame('hello-world', $this->blink->get('\App\Models\Post.1'));
+
+        $this->assertSame(
+            ['\App\Models\Post.1' => 'hello-world'],
+            $this->blink->get('\App\Models\Post.*')
+        );
+
+        $this->blink->forget('\App\Models\Post.1');
+
+        $this->assertFalse($this->blink->has('\App\Models\Post.1'));
+    }
+
+    /** @test */
     public function it_provides_a_chainable_put_method()
     {
         $this->blink
