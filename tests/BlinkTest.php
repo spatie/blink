@@ -197,6 +197,47 @@ class BlinkTest extends TestCase
     }
 
     /** @test */
+    public function it_can_fetch_all_values_starting_with_a_certain_value()
+    {
+        $this->blink->put([
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2',
+            'testgroup1' => 'valueTestGroup1',
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ]);
+
+        $expectedArray = [
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2',
+        ];
+
+        $this->assertSame($expectedArray, $this->blink->allStartingWith('group1'));
+    }
+
+    /** @test */
+    public function it_can_fetch_all_values_starting_with_a_default_value()
+    {
+        $this->blink->put([
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2',
+            'testgroup1' => 'valueTestGroup1',
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ]);
+
+        $expectedArray = [
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2',
+            'testgroup1' => 'valueTestGroup1',
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ];
+
+        $this->assertSame($expectedArray, $this->blink->allStartingWith());
+    }
+
+    /** @test */
     public function it_can_forget_a_value()
     {
         $this->blink->put('key', 'value');
@@ -240,6 +281,27 @@ class BlinkTest extends TestCase
         $this->assertNull($this->blink->get('key'));
 
         $this->assertNull($this->blink->get('otherKey'));
+    }
+
+    /** @test */
+    public function it_can_flush_all_keys_starting_with_a_certain_string()
+    {
+        $this->blink->put([
+            'group1' => 'valueGroup1',
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2',
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ]);
+
+        $this->blink->flushStartingWith('group1');
+
+        $expectedArray = [
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ];
+
+        $this->assertSame($expectedArray, $this->blink->all());
     }
 
     /** @test */

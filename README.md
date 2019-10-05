@@ -45,7 +45,7 @@ $blink->flush(); // Empty the entire blink
 
 $blink->flushStartingWith('somekey'); // Remove all items whose keys start with "somekey"
 
-$blink->increment('number'); // $blink->get('key') will return 1 
+$blink->increment('number'); // $blink->get('key') will return 1
 $blink->increment('number'); // $blink->get('key') will return 2
 $blink->increment('number', 3); // $blink->get('key') will return 5
 
@@ -96,7 +96,7 @@ You can call the following methods on it:
  *
  * @param string|array $name
  * @param string|int|null $value
- * 
+ *
  * @return $this
  */
 public function put($name, $value = null)
@@ -133,9 +133,9 @@ public function has(string $name) : bool
 ```php
 /**
  * Only if the given key is not present in the blink cache the callable will be executed.
- * 
+ *
  * The result of the callable will be stored in the given key and returned.
- * 
+ *
  * @param $key
  * @param callable $callable
  *
@@ -149,6 +149,18 @@ public function has(string $name) : bool
  * Get all values in the blink cache.
 */
 public function all() : array
+```
+
+### allStartingWith
+```php
+/**
+ * Get all values from the blink cache which keys start with the given string.
+ *
+ * @param string $startingWith
+ *
+ * @return array
+*/
+public function allStartingWith(string $startingWith = '') : array
 ```
 
 ### forget
@@ -175,6 +187,18 @@ public function forget(string $key)
  public function flush()
 ```
 
+### flushStartingWith
+```php
+/**
+ * Flush all values from the blink cache which keys start with the specified value.
+ *
+ * @param string $startingWith
+ *
+ * @return $this
+ */
+ public function flushStartingWith(string $startingWith)
+```
+
 ### pull
 ```php
 /**
@@ -182,7 +206,7 @@ public function forget(string $key)
  *
  * This function has support for the '*' wildcard.
  *
- * @param string $name 
+ * @param string $name
  *
  * @return null|string
  */

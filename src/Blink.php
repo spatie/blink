@@ -79,6 +79,24 @@ class Blink implements ArrayAccess, Countable
     }
 
     /**
+     * Get all keys starting with a given string from the store.
+     *
+     * @param string $startingWith
+     *
+     * @return array
+     */
+    public function allStartingWith(string $startingWith = '') : array
+    {
+        $values = $this->all();
+
+        if ($startingWith === '') {
+            return $values;
+        }
+
+        return $this->filterKeysStartingWith($values, $startingWith);
+    }
+
+    /**
      * Forget a value from the store.
      *
      * This function has support for the '*' wildcard.
@@ -108,6 +126,26 @@ class Blink implements ArrayAccess, Countable
     public function flush()
     {
         return $this->values = [];
+    }
+
+    /**
+     * Flush all values from the store which keys start with a given string.
+     *
+     * @param string $startingWith
+     *
+     * @return $this
+     */
+    public function flushStartingWith(string $startingWith = '')
+    {
+        $newContent = [];
+
+        if ($startingWith !== '') {
+            $newContent = $this->filterKeysNotStartingWith($this->all(), $startingWith);
+        }
+
+        $this->values = $newContent;
+
+        return $this;
     }
 
     /**
