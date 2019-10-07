@@ -2,6 +2,10 @@
 
 All notable changes to `blink` will be documented in this file
 
+## 1.1.0 - 2019-10-07
+
+- add `flushStartingWith()` and `allStartingWith()` methods (#13)
+
 ## 1.0.2 - 2018-11-27
 
 - add support of namespaces as cache key
