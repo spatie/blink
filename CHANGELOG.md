@@ -2,6 +2,10 @@
 
 All notable changes to `blink` will be documented in this file
 
+## 1.1.1 - 2019-10-08
+
+- optimize pull method (#16)
+
 ## 1.1.0 - 2019-10-07
 
 - add `flushStartingWith()` and `allStartingWith()` methods (#13)
