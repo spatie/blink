@@ -159,18 +159,6 @@ class Blink implements ArrayAccess, Countable
      */
     public function pull(string $key)
     {
-        if ($this->stringContainsWildcard($key)) {
-            $keys = $this->getKeysMatching($key);
-
-            $values = $this->getValuesForKeys($keys);
-
-            foreach ($keys as $key) {
-                $this->forget($key);
-            }
-
-            return $values;
-        }
-
         $value = $this->get($key);
 
         $this->forget($key);
