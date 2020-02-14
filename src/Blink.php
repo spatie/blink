@@ -22,11 +22,11 @@ class Blink implements ArrayAccess, Countable
     {
         $newValues = $key;
 
-        if (! is_array($key)) {
-            $newValues = [$key => $value];
+        if (is_array($key)) {
+            $this->values = $this->values + $newValues;
+        } else {
+            $this->values[$key] = $value;
         }
-
-        $this->values = array_merge($this->values, $newValues);
 
         return $this;
     }
