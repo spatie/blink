@@ -1,7 +1,7 @@
 # Cache that expires in the blink of an eye
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
-[![Build Status](https://img.shields.io/travis/spatie/blink/master.svg?style=flat-square)](https://travis-ci.org/spatie/blink)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/blink/run-tests?label=tests)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/blink.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/blink)
 [![StyleCI](https://styleci.io/repos/84998612/shield?branch=master)](https://styleci.io/repos/84998612)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
@@ -63,13 +63,11 @@ count($blink); // Returns 1
 
 Read the [usage](#usage) section of this readme to learn the other methods.
 
-## Postcardware
+## Support us
 
-You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
+We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us). 
 
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
+We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -264,9 +262,6 @@ If you discover any security related issues, please email freek@spatie.be instea
 
 We got the idea and the name for this package from [Statamic's Blink helper](https://docs.statamic.com/addons/helpers#blink-cache). We reached out to them and got permission for using the `blink` name.
 
-## About Spatie
-
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
 ## License
 
