@@ -2,8 +2,8 @@
 
 namespace Spatie\Blink\Test;
 
-use Spatie\Blink\Blink;
 use PHPUnit\Framework\TestCase;
+use Spatie\Blink\Blink;
 
 class BlinkTest extends TestCase
 {
@@ -29,7 +29,7 @@ class BlinkTest extends TestCase
     }
 
     /** @test */
-    function it_can_store_a_key_value_pair_with_a_numeric_key()
+    public function it_can_store_a_key_value_pair_with_a_numeric_key()
     {
         $this->blink->put('2', 'value');
 
