@@ -2,8 +2,8 @@
 
 namespace Spatie\Blink;
 
-use Countable;
 use ArrayAccess;
+use Countable;
 
 class Blink implements ArrayAccess, Countable
 {
@@ -85,7 +85,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @return array
      */
-    public function allStartingWith(string $startingWith = '') : array
+    public function allStartingWith(string $startingWith = ''): array
     {
         $values = $this->all();
 
