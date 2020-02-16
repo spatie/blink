@@ -29,6 +29,14 @@ class BlinkTest extends TestCase
     }
 
     /** @test */
+    function it_can_store_a_key_value_pair_with_a_numeric_key()
+    {
+        $this->blink->put('2', 'value');
+
+        $this->assertSame('value', $this->blink->get('2'));
+    }
+
+    /** @test */
     public function it_can_store_an_array()
     {
         $testArray = ['one' => 1, 'two' => 2];
@@ -172,6 +180,21 @@ class BlinkTest extends TestCase
         $this->blink->put($values);
 
         $this->assertSame('value', $this->blink->get('key'));
+
+        $this->assertSame($values, $this->blink->all());
+    }
+
+    /** @test */
+    public function it_can_store_multiple_value_pairs_in_one_go_with_numeric_keys()
+    {
+        $values = [
+            '2' => 'value',
+            '4' => 'otherValue',
+        ];
+
+        $this->blink->put($values);
+
+        $this->assertSame('value', $this->blink->get('2'));
 
         $this->assertSame($values, $this->blink->all());
     }
