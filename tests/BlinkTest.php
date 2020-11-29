@@ -13,7 +13,7 @@ class BlinkTest extends TestCase
     /** @var \Spatie\Blink\Blink */
     protected $blink;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
