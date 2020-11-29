@@ -5,7 +5,7 @@ All notable changes to `blink` will be documented in this file
 ## 1.1.3 - 2020-11-29
 
 - support PHP 8.0 and PHPUnit 9
-- now requires PHP 7.1 and up
+- now requires PHP 7.3 and up
 
 ## 1.1.2 - 2019-02-16
 
