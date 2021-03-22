@@ -4,11 +4,12 @@ namespace Spatie\Blink;
 
 use ArrayAccess;
 use Countable;
+use Psr\SimpleCache\CacheInterface;
 
-class Blink implements ArrayAccess, Countable
+class Blink implements ArrayAccess, Countable, CacheInterface
 {
     /** @var array */
-    protected $values = [];
+    protected array $values = [];
 
     /**
      * Put a value in the store.
@@ -18,7 +19,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @return $this
      */
-    public function put($key, $value = null)
+    public function put($key, $value = null): self
     {
         $newValues = $key;
 
@@ -31,6 +32,13 @@ class Blink implements ArrayAccess, Countable
         return $this;
     }
 
+    public function set($key, $value, $ttl = null): bool
+    {
+        $this->put($key, $value);
+
+        return true;
+    }
+
     /**
      * Get a value from the store.
      *
@@ -41,7 +49,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @return null|string|array
      */
-    public function get(string $key, $default = null)
+    public function get($key, $default = null)
     {
         if ($this->stringContainsWildcard($key)) {
             $values = $this->getValuesForKeys($this->getKeysMatching($key));
@@ -59,7 +67,7 @@ class Blink implements ArrayAccess, Countable
      *
      * This function has support for the '*' wildcard.
      */
-    public function has(string $key): bool
+    public function has($key): bool
     {
         if ($this->stringContainsWildcard($key)) {
             return count($this->getKeysMatching($key)) > 0;
@@ -105,7 +113,14 @@ class Blink implements ArrayAccess, Countable
      *
      * @return $this
      */
-    public function forget(string $key)
+    public function forget(string $key): self
+    {
+        $this->delete($key);
+
+        return $this;
+    }
+
+    public function delete($key): bool
     {
         $keys = $this->stringContainsWildcard($key)
             ? $this->getKeysMatching($key)
@@ -115,7 +130,7 @@ class Blink implements ArrayAccess, Countable
             unset($this->values[$key]);
         }
 
-        return $this;
+        return true;
     }
 
     /**
@@ -123,9 +138,18 @@ class Blink implements ArrayAccess, Countable
      *
      * @return $this
      */
-    public function flush()
+    public function flush(): self
     {
-        return $this->values = [];
+        $this->clear();
+
+        return $this;
+    }
+
+    public function clear(): bool
+    {
+        $this->values = [];
+
+        return true;
     }
 
     /**
@@ -161,20 +185,12 @@ class Blink implements ArrayAccess, Countable
     {
         $value = $this->get($key);
 
-        $this->forget($key);
+        $this->delete($key);
 
         return $value;
     }
 
-    /**
-     * Increment a value from the store.
-     *
-     * @param string $key
-     * @param int $by
-     *
-     * @return int|null|string
-     */
-    public function increment(string $key, int $by = 1)
+    public function increment(string $key, int $by = 1): int
     {
         $currentValue = $this->get($key) ?? 0;
 
@@ -185,80 +201,32 @@ class Blink implements ArrayAccess, Countable
         return $newValue;
     }
 
-    /**
-     * Decrement a value from the store.
-     *
-     * @param string $key
-     * @param int $by
-     *
-     * @return int|null|string
-     */
-    public function decrement(string $key, int $by = 1)
+    public function decrement(string $key, int $by = 1): int
     {
         return $this->increment($key, $by * -1);
     }
 
-    /**
-     * Whether a offset exists.
-     *
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     *
-     * @param mixed $offset
-     *
-     * @return bool
-     */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
 
-    /**
-     * Offset to retrieve.
-     *
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     *
-     * @param mixed $offset
-     *
-     * @return mixed
-     */
     public function offsetGet($offset)
     {
         return $this->get($offset);
     }
 
-    /**
-     * Offset to set.
-     *
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     *
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
-        $this->put($offset, $value);
+        $this->set($offset, $value);
     }
 
-    /**
-     * Offset to unset.
-     *
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
-     *
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
-        $this->forget($offset);
+        $this->delete($offset);
     }
 
-    /**
-     * Count elements.
-     *
-     * @link http://php.net/manual/en/countable.count.php
-     *
-     * @return int
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->all());
     }
@@ -337,5 +305,34 @@ class Blink implements ArrayAccess, Countable
         return array_filter($this->values, function ($key) use ($keys) {
             return in_array($key, $keys);
         }, ARRAY_FILTER_USE_KEY);
+    }
+
+    public function getMultiple($keys, $default = null): array
+    {
+        $values = [];
+
+        foreach($keys as $key) {
+            $values[$key] =  $this->get($key, $default);
+        }
+
+        return $values;
+    }
+
+    public function setMultiple($values, $ttl = null): bool
+    {
+        foreach ($values as $key => $value) {
+            $this->set($key, $value, $ttl);
+        }
+
+        return true;
+    }
+
+    public function deleteMultiple($keys): bool
+    {
+        foreach($keys as $key) {
+            $this->delete($key);
+        }
+
+        return true;
     }
 }
