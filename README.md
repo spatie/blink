@@ -2,8 +2,6 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/blink/run-tests?label=tests)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/blink.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/blink)
-[![StyleCI](https://styleci.io/repos/84998612/shield?branch=master)](https://styleci.io/repos/84998612)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 
 This package contains a class called `Blink` that can cache values. The cache only spans the length of a single request.
