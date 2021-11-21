@@ -13,9 +13,8 @@ class Blink implements ArrayAccess, Countable
     /**
      * Put a value in the store.
      *
-     * @param string|array $key
-     * @param mixed $value
-     *
+     * @param  string|array  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function put($key, $value = null)
@@ -36,9 +35,8 @@ class Blink implements ArrayAccess, Countable
      *
      * This function has support for the '*' wildcard.
      *
-     * @param string $key
-     * @param mixed $default
-     *
+     * @param  string  $key
+     * @param  mixed  $default
      * @return null|string|array
      */
     public function get(string $key, $default = null)
@@ -81,8 +79,7 @@ class Blink implements ArrayAccess, Countable
     /**
      * Get all keys starting with a given string from the store.
      *
-     * @param string $startingWith
-     *
+     * @param  string  $startingWith
      * @return array
      */
     public function allStartingWith(string $startingWith = ''): array
@@ -101,8 +98,7 @@ class Blink implements ArrayAccess, Countable
      *
      * This function has support for the '*' wildcard.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return $this
      */
     public function forget(string $key)
@@ -131,8 +127,7 @@ class Blink implements ArrayAccess, Countable
     /**
      * Flush all values from the store which keys start with a given string.
      *
-     * @param string $startingWith
-     *
+     * @param  string  $startingWith
      * @return $this
      */
     public function flushStartingWith(string $startingWith = '')
@@ -153,8 +148,7 @@ class Blink implements ArrayAccess, Countable
      *
      * This function has support for the '*' wildcard.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return null|string
      */
     public function pull(string $key)
@@ -169,9 +163,8 @@ class Blink implements ArrayAccess, Countable
     /**
      * Increment a value from the store.
      *
-     * @param string $key
-     * @param int $by
-     *
+     * @param  string  $key
+     * @param  int  $by
      * @return int|null|string
      */
     public function increment(string $key, int $by = 1)
@@ -188,9 +181,8 @@ class Blink implements ArrayAccess, Countable
     /**
      * Decrement a value from the store.
      *
-     * @param string $key
-     * @param int $by
-     *
+     * @param  string  $key
+     * @param  int  $by
      * @return int|null|string
      */
     public function decrement(string $key, int $by = 1)
@@ -203,8 +195,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return bool
      */
     public function offsetExists($offset)
@@ -217,8 +208,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return mixed
      */
     public function offsetGet($offset)
@@ -231,8 +221,8 @@ class Blink implements ArrayAccess, Countable
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param  mixed  $offset
+     * @param  mixed  $value
      */
     public function offsetSet($offset, $value)
     {
@@ -244,7 +234,7 @@ class Blink implements ArrayAccess, Countable
      *
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
-     * @param mixed $offset
+     * @param  mixed  $offset
      */
     public function offsetUnset($offset)
     {
@@ -269,8 +259,7 @@ class Blink implements ArrayAccess, Countable
      * The result of the callable will be stored in the given key and returned.
      *
      * @param $key
-     * @param callable $callable
-     *
+     * @param  callable  $callable
      * @return mixed
      */
     public function once($key, callable $callable)
@@ -316,9 +305,8 @@ class Blink implements ArrayAccess, Countable
     }
 
     /**
-     * @param string $haystack
-     * @param string|array $needles
-     *
+     * @param  string  $haystack
+     * @param  string|array  $needles
      * @return bool
      */
     protected function stringContains(string $haystack, $needles): bool
