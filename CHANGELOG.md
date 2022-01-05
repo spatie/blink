@@ -2,6 +2,21 @@
 
 All notable changes to `blink` will be documented in this file
 
+## 1.2.0 - 2022-01-05
+
+## What's Changed
+
+- Add PHP 8.1 Support by @patinthehat in https://github.com/spatie/blink/pull/27
+- add return types by @edalzell in https://github.com/spatie/blink/pull/30
+- Drop support for PHP 7
+
+## New Contributors
+
+- @patinthehat made their first contribution in https://github.com/spatie/blink/pull/27
+- @edalzell made their first contribution in https://github.com/spatie/blink/pull/30
+
+**Full Changelog**: https://github.com/spatie/blink/compare/1.1.3...1.2.0
+
 ## 1.1.3 - 2020-11-29
 
 - support PHP 8.0 and PHPUnit 9
