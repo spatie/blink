@@ -282,6 +282,15 @@ class Blink implements ArrayAccess, Countable
         return $this->get($key);
     }
 
+    public function onceIf($condition, $key, callable $callable)
+    {
+        if ($condition) {
+            return $this->once($key, $callable);
+        }
+
+        return $callable();
+    }
+
     protected function filterKeysStartingWith(array $values, string $startsWith): array
     {
         return array_filter($values, function ($key) use ($startsWith) {

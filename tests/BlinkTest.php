@@ -481,4 +481,25 @@ class BlinkTest extends TestCase
             $this->assertSame($firstResult, $this->blink->once('random', $callable));
         }
     }
+
+    /** @test */
+    public function it_can_perform_a_function_only_once_based_on_condition()
+    {
+        $counter = 0;
+
+        $callable = function () use (&$counter) {
+            $counter++;
+
+            return $counter;
+        };
+
+        $results = [];
+
+        $results[] = $this->blink->onceIf(true, 'counter', $callable);
+        $results[] = $this->blink->onceIf(true, 'counter', $callable);
+        $results[] = $this->blink->onceIf(false, 'counter', $callable);
+        $results[] = $this->blink->onceIf(true, 'counter', $callable);
+        
+        $this->assertSame([1,1,2,1], $results);
+    }
 }
