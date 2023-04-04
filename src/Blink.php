@@ -20,7 +20,7 @@ class Blink implements ArrayAccess, Countable
      * @example
      * function a() { return Blink::global()->once('random', $expensiveFunction); }
      * function b() { return Blink::global()->once('random', $expensiveFunction); }
-     * a(); b(); // call to function `b` will returned cached value created in function `a`
+     * a(); b(); // call to function `b` will return cached value stored in function `a`
      * @return static
      */
     public static function global()
