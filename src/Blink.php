@@ -8,7 +8,29 @@ use Countable;
 class Blink implements ArrayAccess, Countable
 {
     /** @var array */
-    protected $values = [];
+    protected static $static_values = [];
+
+    /** @var array */
+    protected $values;
+
+    /**
+     * Instantiate a new Blink instance that shares the same values as all other Blink instances created via
+     * `Blink::global`
+     *
+     * @example
+     * function a() { return Blink::global()->once('random', $expensiveFunction); }
+     * function b() { return Blink::global()->once('random', $expensiveFunction); }
+     * a(); b(); // call to function `b` will return cached value stored in function `a`
+     * @return static
+     */
+    public static function global()
+    {
+        return new static(static::$static_values);
+    }
+
+    public function __construct($stored_values = []) {
+        $this->values = $stored_values;
+    }
 
     /**
      * Put a value in the store.
