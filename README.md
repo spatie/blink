@@ -1,7 +1,7 @@
 # Cache that expires in the blink of an eye
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/blink/run-tests?label=tests)
+[![run-tests](https://github.com/spatie/blink/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/blink/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/blink.svg?style=flat-square)](https://packagist.org/packages/spatie/blink)
 
 This package contains a class called `Blink` that can cache values. The cache only spans the length of a single request.
