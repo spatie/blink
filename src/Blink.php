@@ -305,6 +305,18 @@ class Blink implements ArrayAccess, Countable
         return $this->get($key);
     }
 
+    /**
+     * Use the "once" method only if the given condition is true.
+     *
+     * Otherwise, the callable will be executed.
+     *
+     * @return mixed
+     */
+    public function onceIf($shouldBlink, $key, callable $callable)
+    {
+        return $shouldBlink ? $this->once($key, $callable) : $callable();
+    }
+
     protected function filterKeysStartingWith(array $values, string $startsWith): array
     {
         return array_filter($values, function ($key) use ($startsWith) {
