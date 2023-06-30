@@ -142,6 +142,24 @@ public function has(string $name) : bool
  *
  * @return mixed
  */
+public function once($key, callable $callable)
+```
+
+### onceIf
+
+```php
+/**
+ * Use the "once" method only if the given condition is true.
+ *
+ * Otherwise, the callable will be executed.
+ *
+ * @param bool $shouldBlink
+ * @param $key
+ * @param callable
+ *
+ * @return mixed
+ */
+public function onceIf($shouldBlink, $key, callable $callable)
 ```
 
 ### all
