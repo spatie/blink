@@ -2,6 +2,20 @@
 
 All notable changes to `blink` will be documented in this file
 
+## 1.3.0 - 2023-06-30
+
+### What's Changed
+
+- Add PHP 8.2 Support by @patinthehat in https://github.com/spatie/blink/pull/32
+- added Blink::global() by @sfinktah in https://github.com/spatie/blink/pull/34
+- Add onceIf method by @jasonvarga in https://github.com/spatie/blink/pull/35
+
+### New Contributors
+
+- @sfinktah made their first contribution in https://github.com/spatie/blink/pull/34
+
+**Full Changelog**: https://github.com/spatie/blink/compare/1.2.0...1.3.0
+
 ## 1.2.0 - 2022-01-05
 
 ## What's Changed
