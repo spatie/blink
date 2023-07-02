@@ -148,7 +148,9 @@ class Blink implements ArrayAccess, Countable
      */
     public function flush()
     {
-        return $this->values = [];
+        $this->values = [];
+
+        return $this;
     }
 
     /**
