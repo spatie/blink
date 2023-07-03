@@ -64,7 +64,7 @@ If you want to use the same instance within the current request, you can use the
 ```php
 Blink::global()->put('key', 'value');
 
-Blink::global()->get('key') // Returns 'value';
+Blink::global()->get('key') // Returns 'value'
 ```
 
 Read the [usage](#usage) section of this readme to learn the other methods.
