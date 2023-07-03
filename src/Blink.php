@@ -8,29 +8,33 @@ use Countable;
 class Blink implements ArrayAccess, Countable
 {
     /** @var array */
-    protected static $static_values = [];
-
-    /** @var array */
     protected $values;
 
     /**
-     * Instantiate a new Blink instance that shares the same values as all other Blink instances created via
-     * `Blink::global`
+     * @var null|Blink
+     */
+    private static $instance;
+
+    /**
+     * Get always the same instance within the current request
      *
-     * @example
-     * function a() { return Blink::global()->once('random', $expensiveFunction); }
-     * function b() { return Blink::global()->once('random', $expensiveFunction); }
-     * a(); b(); // call to function `b` will return cached value stored in function `a`
      * @return static
      */
-    public static function global()
+    public static function global(): self
     {
-        return new static(static::$static_values);
+        if (!self::$instance) {
+            self::$instance = new static();
+        }
+
+        return self::$instance;
     }
 
-    public function __construct($stored_values = [])
+    /**
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->values = $stored_values;
+        $this->values = $values;
     }
 
     /**
@@ -77,7 +81,7 @@ class Blink implements ArrayAccess, Countable
             : $default;
     }
 
-    /*
+    /**
      * Determine if the store has a value for the given name.
      *
      * This function has support for the '*' wildcard.
