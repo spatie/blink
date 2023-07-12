@@ -25,12 +25,17 @@ class Blink implements ArrayAccess, Countable
      */
     public static function global()
     {
-        return new static(static::$static_values);
+        $result = new static();
+        $result->init_static();
+        return $result;
     }
 
-    public function __construct($stored_values = [])
-    {
+    public function __construct($stored_values = []) {
         $this->values = $stored_values;
+    }
+
+    public function init_static() {
+        $this->values =& self::$static_values;
     }
 
     /**
