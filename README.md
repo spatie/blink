@@ -59,6 +59,14 @@ $blink->put('key', 'value');
 count($blink); // Returns 1
 ```
 
+If you want to use the same instance within the current request, you can use the static method `global`.
+
+```php
+Blink::global()->put('key', 'value');
+
+Blink::global()->get('key') // Returns 'value'
+```
+
 Read the [usage](#usage) section of this readme to learn the other methods.
 
 ## Support us

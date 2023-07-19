@@ -499,4 +499,12 @@ class BlinkTest extends TestCase
         $this->assertSame(4, $this->blink->onceIf(false, 'key', $callable));
         $this->assertSame(2, $this->blink->onceIf(true, 'key', $callable));
     }
+
+    /** @test */
+    public function it_can_use_global_instance()
+    {
+        Blink::global()->put('key', 'value');
+
+        $this->assertSame('value', Blink::global()->get('key'));
+    }
 }
