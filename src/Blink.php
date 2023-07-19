@@ -22,7 +22,7 @@ class Blink implements ArrayAccess, Countable
      */
     public static function global(): self
     {
-        if (!self::$instance) {
+        if (! self::$instance) {
             self::$instance = new static();
         }
 
