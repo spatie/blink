@@ -13,7 +13,7 @@ class Blink implements ArrayAccess, Countable
     /**
      * @var null|Blink
      */
-    private static $instance;
+    protected static $instance;
 
     /**
      * Get always the same instance within the current request
