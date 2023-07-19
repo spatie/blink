@@ -2,6 +2,18 @@
 
 All notable changes to `blink` will be documented in this file
 
+## 1.4.0 - 2023-07-19
+
+### What's Changed
+
+- Fix the global method to return always the same instance by @stfndamjanovic in https://github.com/spatie/blink/pull/37
+
+### New Contributors
+
+- @stfndamjanovic made their first contribution in https://github.com/spatie/blink/pull/37
+
+**Full Changelog**: https://github.com/spatie/blink/compare/1.3.0...1.4.0
+
 ## 1.3.0 - 2023-06-30
 
 ### What's Changed
