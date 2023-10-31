@@ -30,6 +30,18 @@ class Blink implements ArrayAccess, Countable
     }
 
     /**
+     * Handle dynamic static method calls via the global instance
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public static function __callStatic($method, $parameters)
+    {
+        return static::global()->$method(...$parameters);
+    }
+
+    /**
      * @param array $values
      */
     public function __construct(array $values = [])

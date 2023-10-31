@@ -2,6 +2,11 @@
 
 All notable changes to `blink` will be documented in this file
 
+
+### What's Changed
+
+- Add static calls that redirect to the global instance, i.e. Blink::get, etc.
+
 ## 1.4.0 - 2023-07-19
 
 ### What's Changed
